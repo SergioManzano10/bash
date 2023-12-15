@@ -1,0 +1,421 @@
+#############################################################
+# 1 Welcome to linux
+###############################
+
+#Lo primero es conectarse de forma segura para conectarnos a la conexión/entorno de nuestro master y ahí se creará la carpeta con nuestro usuario
+ssh smanzano@masteromics.uvic.cat #seleccionar yes
+omics1234 #la contraseña cuando escribes no se ve nada
+
+pwd
+ls
+# this is a comment, nothing is executed
+ls # this is a comment after ls 
+
+ssh smanzano@masteromics.uvic.cat #este es su usuario, yo tengo que poner el que he puesto antes
+exit  # close connection to masteromics back to your local machine
+ssh smanzano@masteromics.uvic.cat
+
+pwd #sirve para ver dónde nos encontramos
+ls #lista los archivos que hay dentro del lugar en el que estoy
+exit #sirve para salir de la sesión
+cd ..  # same as "cd ../" #Sirve para salir de la carpeta en la que estoy
+ls
+ls -l   # "-" means options (actually short options = one character) #me da información sobre todo el environment en el que esté
+ls -l -t  # long time #lo ordena de mayor a menor en el tiempo
+ls -lt 
+ls -ltr  # long time reverse
+ls --help # all commands have a help; -- means a long option = more than one character
+man ls #si en este comando doy a la F avanzo a la siguiente pág y si doy a la B retrocedo
+
+pwd --help #Me da información acerca del comando pwd
+
+
+#############################################################
+# 2 Navigate and organize files
+###############################
+
+cd /
+ls
+cd ./bin/  # or "cd bin" 
+cd ..
+cd etc  # or "cd ./etc/" or "cd ./etc"
+cd ../bin  # relative path #sirve para que vaya al directorio original del todo y luego se meta en bin
+cd /etc  # absolute path
+cd /home/smanzano 
+cd  # "cd" alone goes to your home folder, tipically /home/user #a la carpeta creada
+
+mkdir bioinf_linux #sirve para crear una carpeta
+cd bioinf_linux #sirve para salir de la carpeta mencionada
+ls
+mkdir project1
+ls
+mkdir project 2 #si lo hago así, me pone una crpeta llamada project y otra llamada 2
+ls
+cd 2
+cd ..
+mkdir "project 2" #así me hace una llamada project 2
+mkdir 
+history #así veo el historial de lo que he hecho
+
+cd project 2 #no funciona porque lo toma como acceder a dos carpetas a la vez
+
+ls
+cd "project 2"
+cd ..
+cd project\ 2  # \ is the scape character
+cd ..
+mkdir project_2
+ls
+rmdir 2 #para borrar
+rmdir project "project 2"
+ls
+
+mv project_2/ project2    # rename a file/folder de project_2 a project2
+
+mv data project2 project1  # move a file/folder into a subfolder #mueve project2 a project1 (dentro)
+# si quiero mover un archivo que está dentro de una carpeta hacia una carpeta que está dentro de esa misma carpeta se hace: mv archivo carpeta
+ls
+cd project1
+ls
+cd ..
+
+ls p # + press tab
+# try to use arrow keys up and down to see the previous commands
+history
+# ctr+r and start writting a previous command Ex. mv proj
+
+
+#############################################################
+# 3 Wildcards, move and remove
+#############################################################
+
+# cd bioinf_linux
+echo ACGTAA #echo sirve para escribir algo y que me lo devuelva como una palabra
+echo ACGTAA > 1.txt  # > redirects output to a file #hace que me lo guarde en un formato de texto en este caso
+ls
+echo ACGTAC > 2.txt
+echo CCGTAA > 11.txt
+echo CCCCAA > 13.text
+ls
+ls ?.txt #si juntamos la interrogación al ls, no funciona el comando
+ls ?.t?t
+ls 1*  
+ls *xt
+ls {2.txt,13.text} 
+ls {?.txt,13.text}  # {} can contain wildcards
+ls [1,2].txt
+
+mv 1.txt 11.txt 13.text ./project1/  # with "mv" all arguments except the last are considered files #sirve para mover todos esos archivos a project1
+cd project1
+mv 1.txt ../ #sirve para mover el archivo 1.txt al directorio parental
+ls ../ #sirve pata ver lo que hay en el directorio parental
+ls
+cd ..
+mv 2.txt  ~/omics/project1/data/myseq.txt  # if the destination is not a directory, the file is renamed
+cp project1/*txt project1/data  # "cp" works similarly to "mv" #sirve para copiar
+cd project1/data/
+ls
+cd ..
+cp -r data more_data  # copy recursively, copy a folder with all its files and subfolders
+
+find -name "*txt"  # finds files ascending from the current working directory
+rm 11.txt
+rm data  # error
+rmdir data  # error, only works for emtpy directories
+rm -r data   # rm folder and all its files and subfolders #este es el comando para borrar carpetas
+
+#####################################
+Actividad. La que está en la diapo 20
+#####################################
+
+#se tiene que hacer con el shell de linux, no con el de ubuntu
+
+cd .\Downloads\
+ls
+cd ..
+mkdir bioinf_linux
+mv .\ids.txt ..\bioinf_linux\
+mv .\my_seqs.txt ..\bioinf_linux\
+mv .\script.sh ..\bioinf_linux\
+mv .\ids.txt .\sequences\ #Así con todas las carpetas #El .\ quiere dcir que aquí es donde estoy
+
+#############################################################
+# wc and grep
+###############################
+
+echo AGGCATCTAT seq1.txt  # everything is echoed
+echo AGGCATCTAT > seq1.txt  # the echo is redirected to the file seq1.txt
+echo AGGCACA > seq2.txt  # write a sequence without T
+echo AGTATGCATCTAT > seq3.txt
+cat seq1.txt
+cat seq* 
+cat seq* > all_seqs.txt
+cat all_seqs.txt
+cat dna1.fasta dna2.fasta dna3.fasta > dna_all.fasta #me une todas las palabras de los diferentes archivos en uno comun denominado dna_all.fasta
+wc all_seqs.txt #This command counts the number of lines, words, and characters in the file "all_seqs.txt."
+man wc #This command displays the manual page for the "wc" command, which provides detailed information about how to use it.
+wc -l all_seqs.txt #This command counts and displays the number of lines in the file "all_seqs.txt."
+wc -w all_seqs.txt #This command counts and displays the number of words in the file "all_seqs.txt."
+wc -c all_seqs.txt #This command counts and displays the number of characters in the file "all_seqs.txt."
+grep T all_seqs.txt #This command searches for lines in the file "all_seqs.txt" that contain the letter 'T' and displays those lines.
+grep -v T all_seqs.txt #This command searches for lines in the file "all_seqs.txt" that do not contain the letter 'T' and displays those lines.
+grep -v T all_seqs.txt | wc -c #This command first filters out lines that do not contain the letter 'T' using grep -v, and then it counts and displays the number of characters in the filtered output.
+grep ">" dna_all.fasta | wc -l #Cuenta todas las lineas que empezan por ">" en el archivo dna_all.fasta
+grep "ATG" dna_all.fasta | wc -w #How many sequences in dna_all.fasta  contain the motif 'ATG'?
+
+
+#############################################################
+# System monitoring
+###############################
+
+whoami #te devuelve el nombre de usuario
+hostname #te dice el nombre del ordenador
+uname -acd
+du -sh  # summary, human readable
+du -sh *  # split per folder or file
+df -h     #du es para las carpetas y df para el sistema
+top	 #   # q to exit
+ps -ef  # every process que está corriendo dentro del servidor en el que me encuentro, 	#full-format listing
+ps -ef | grep smanzano #me dice de toda la lista de procesos que está corriendo, cuales 			#son los que corresponden a mi usuario
+
+df -H #How much disk space in gigabytes (G) is available in the filesystem Mounted on the root ('/')? Write only the number (do not include the G)
+
+hostname -i #devuelve la direccion IP de masteromics
+
+uname -a #Which is the kernel that is running in masteromics.uvic.cat?
+
+#############################################################
+# scp
+###############################
+
+# in masteromics
+ssh smanzano@masteromics.uvic.cat
+mkdir bioinf_linux
+cd bioinf_linux
+echo AGTAGATA > seq_remote.txt
+pwd
+exit
+
+# in your local machine
+scp smanzano@masteromics.uvic.cat:bioinf_linux/seq_remote.txt .
+ls
+echo AGTCCCCC > seq_local.txt
+scp seq_local.txt smanzano@masteromics.uvic.cat:bioinf_linux
+
+
+#############################################################
+# Permissions and bash script
+###############################
+
+# we need script.sh
+# cd to the path where you have script.sh
+scp seq_local.txt smanzano@masteromics.uvic.cat:bioinf_linux
+
+cat script.sh
+./script.sh
+ls -l
+chmod u+x script.sh
+ls -l script.sh
+./script.sh
+chmod a+x script.sh
+ls -l script.sh
+chmod a-x script.sh
+ls -l script.sh
+
+
+#############################################################
+# Display text files
+###############################
+
+# SARS2 genome (from the NCBI Nucleotide data base) in genbank format. 
+
+cat sars2.gb
+less sars2.gb  #abre lo que hay en el fichero #use f b q for going forward, backward and quit, respectively
+head sars2.gb  # displays 10 first lines
+head sars2.gb -n 1 #obtiene solo la primera linea del archivo
+tail sars2.gb 
+tail sars2.gb -n 4
+
+wc sars2.gb  # lines words characters de ese archivo
+wc sars2.gb -l  # lines
+wc sars2.gb -w  # words
+wc sars2.gb -c  # characters
+
+grep LOCUS sars2.gb #localiza la palabra locus en el archivo
+grep AUTHORS sars2.gb
+grep AUTHORS sars2.gb -A 5 #localiza las lineas en las que se encuentra AUTHOR y las 5 lineas siguientes
+grep "AUTHORS\|TITLE" sars2.gb #Si no ponemos \ no funciona, no lo toma como alternativa y espera que las dos palabras estén juntas. Poner comillas para asegurarnos de que no haya error
+grep -E "AUTHORS|TITLE" sars2.gb  # -E extended regex # si pongo la E no hace falta poner el \. Es mejor poner SIEMPRE "" y -E para evitar problemas.
+grep AUTHORS sars2.gb  -A 5 | grep -E -v "TITLE|JOURNAL|PUBMED|REFERENCE"  # -v inverse match #primero hacemos un grep y hacemos que el output me devuelva otro grep pero excluyendo las palabras "TITTLE..."
+
+grep gene sars2.gb
+grep " gene " sars2.gb 
+grep " gene " sars2.gb | head -n2
+grep ORIGIN sars2.gb -A 100000000
+grep ORIGIN sars2.gb -A 100000000 > sars.seq
+
+#############################################################
+# Regular expressions
+###############################
+
+cat dna.txt
+grep AA dna.txt
+grep A.A dna.txt # shows only lines with matches
+grep A.A dna.txt -o  #  one line per each match #muestra cada match en una línea
+grep A.A dna.txt -o -c  # does not work as expected
+grep A.A dna.txt -o | wc -l  # number of occurrences
+grep A[TG]A dna.txt
+grep A[^TG]A dna.txt
+grep -E AGT?A dna.txt #Con grep lo mejor es siempre poner -E
+grep -E "A(GT)?A" dna.txt
+grep -E "AC*" dna.txt -o  # matches AC, ACC, ACCC ... but also A !
+grep -E "AC+" dna.txt -o
+grep -E "[AC]{3}" -o dna.txt
+grep -E "[AC]{3,5}" -o dna.txt
+grep -E "[AC]{3,}" -o dna.txt
+grep -E "[AC]{,5}" -o dna.txt
+grep -E "ACC|AAC" -o dna.txt
+
+
+#############################################################
+# cut, wc, uniq, sort, paste
+###############################
+
+# Go to the UCSC Genome Browser website. 
+# Under Tools | Table Browser, download all human transcripts from chromosome 1 for the RefSeq database.
+# Save the file as transcripts_full.tsv 
+
+head transcripts_full.tsv
+cut transcripts_full.tsv -c5   # get column 5 (position 5 of all rows) 
+cut transcripts_full.tsv -c5 | head
+cut transcripts_full.tsv -c5-20  | head #me da las filas enteras, no caracteres
+cut transcripts_full.tsv -c-20  | head
+cut transcripts_full.tsv -f2-9,13 | head #Me da las columnas seguidas
+cut transcripts_full.tsv -f2-9,13 > transcripts.tsv  # we will use this file from now #las columnas que habíamos seleccionado las guardamos en un nuevo archivo
+ 
+on
+head transcripts.tsv
+
+wc transcripts.tsv
+wc transcripts.tsv -l
+
+# How many transcripts are of type NR_?
+grep NR_ transcripts.tsv | wc -l
+grep NR_ transcripts.tsv -c
+cut -f1 transcripts.tsv | grep NR -c
+cut -c1-2 transcripts.tsv | grep NR -c
+
+
+# How many different genes are there?
+cut -f9 transcripts.tsv
+cut -f9 transcripts.tsv | uniq
+cut -f9 transcripts.tsv | uniq | wc -l #devueve una lista sin duplicados
+
+# Sort the different genes alphabetically
+cut -f9 transcripts.tsv | uniq | sort  # delete name2! grep -v name2
+
+# Sort transcripts by the number of exons
+cut transcripts.tsv -f8
+cut transcripts.tsv -f8 | sort #sirve para ordenar pero en este caso no lo hace
+sort  transcripts.tsv -k8  # sort by column 8  # not perfect!
+sort  transcripts.tsv -k8 -n  # numeric sort #así si ordena los números
+sort  transcripts.tsv -k8 -n -r | head #si queremos ordenar pero al contrario
+
+# For which genes we have more transcripts?
+cut -f9 transcripts.tsv | uniq -c 
+cut -f9 transcripts.tsv | uniq -c | sort
+
+# How to create a file with Gene names and RefSeqs (in this order)?
+head transcripts.tsv
+cut -f9,1 transcripts.tsv #da igual el orden en el que lo pongamos que cuando lo seleccionamos, no me cambia el orden, hay que hacerlo por separado, con los 3 comandos siguientes
+
+cut -f9 transcripts.tsv > genes.txt
+cut -f1 transcripts.tsv > refseqs.txt
+paste genes.txt refseqs.txt > genes_refseq.txt #une los datos linea por linea
+
+head genes_refseq.txt #solo para visualizar
+
+
+#############################################################
+# Manipulate text files part 2
+###############################
+
+cat ids.txt
+cat my_seqs.txt
+paste ids.txt my_seqs.txt   # default paste with a tab
+paste -d' ' ids.txt my_seqs.txt > seqs_id.txt #sirve para poner un delimitador, aquí no hemos puesto nada peroes un espacio normal
+-d? #especifica el edlimitador
+cat seqs_id.txt
+
+cut -f2 seqs_id.txt  # does not work as expected ya que no estamos indicando el delimitador y por defecto coge el tab # si por suerte hay tabuladores lo hará, si hay otro separador no lo hará
+cut -d' ' -f2 seqs_id.txt #así ya funciona
+cut -d' ' -f2- seqs_id.txt #coge de la f2 hasta el final
+cut -d' ' -f2- seqs_id.txt --output-delimiter='-' #sirve para eliminar la separacion y cambiarlo por "-" en este caso
+
+sed 's/876/121/' seqs_id.txt #la "s" del comando sirve para especificar que estamos dentr de la función sed pero que queremos "sustituir" y cambiaremos el primer númro que tenemos por el segundo
+
+sed 's/876/121/' seqs_id.txt > seqs.txt #no modifica el documento original, solo el output, en este caso en el que se va a almacenar (seqs.txt)
+sed 's/999/987/' seqs_id.txt -i  # -i means in-place (in the same file) be careful! #si modifica el original
+cat seqs.txt
+sed 's/[0,9]/1/' seqs.txt  # first character 0 or 9 replaced by 1 #para reemplazar más de 1
+sed 's/[0-9]/1/' seqs.txt  # first character 0 to 9 replaced by 1 #solo el primero decada linea, no todos
+sed 's/[0-9]/1/g' seqs.txt  # all characters 0 to 9 replaced by 1 #hace todas las sustituciones que puede, no solo la primera
+
+sed 's/[a-z]/a/' seqs.txt  # first character a to z replaced by a #lo mismo qe antes pero con letras
+sed 's/[a-z]/a/g' seqs.txt  # all characters
+sed 's/ //g' seqs.txt
+
+tr 'a' 's' < seqs.txt #sirve para cambiar todas las a por s, en este caso la flecha de la redireccion es <
+
+tr [:lower:] [:upper:] < seqs.txt #de minusculas a mayusculas
+
+tr -d 'fglg' < seqs.txt #elimina las partes de la secuencia que siguen ese patrón
+tr -d ' ' < seqs.txt #lo pone todo junto ya que elimina los espacios #los comandos de abajo son mejores para eliminar espacios en blanco
+
+tr -d [:blank:] < seqs.txt  # spaces but also tabs
+tr -d '[:space:]' < seqs.txt  # also end-of-line characters
+tr -d [:digit:] < seqs.txt #elimina todos los digitos
+tr -d [:alpha:] < seqs.txt #elimina todas las letras
+
+cat seqs_id.txt
+cat seqs.txt
+diff seqs_id.txt seqs.txt #para comparar distintos files #el output son las filas donde se producen los cambios #ej: si pone 4c4, dice que el cambioestá en la fila 4 de una y en la fila 4 de la otra
+
+uniq seqs.txt
+uniq -c seqs.txt  # show counts #nos dice cuantas veces se repiten las filas
+uniq -d seqs.txt   # show duplicated lines only #nos muestra solo las filas duplicadas
+uniq -u seqs.txt   # show non-duplicated lines only  #nos muestra solo las no duplicadas
+uniq -w 14 -c seqs.txt  # compare 10 characters
+
+
+#############################################################
+# For loop
+###############################
+
+echo "the shell is fun" #imprime esta palabra
+txt="the shell is fun"   #store in a variable, crea una variable llamada hello con esas palabras
+echo txt  # not what expected! #Para llamar a la variable hay que poner $
+echo $txt #Así si funciona
+
+	#aquí estamos aplicando una finción (ver diapositivas, viene explicado)
+for filename in dna?.fasta
+do
+head -n 2 $filename
+done
+	#aquí acaba la función
+
+for filename in dna?.fasta; do echo $filename; head -n 2 $filename; tail -n 2 $filename; done #poner eso tal cual, si no funciona cambiar "," por intros
+bash "nombre del archivo! #sin comillas
+
+cat head_and_tails.sh
+./heads_and_tails.sh  # permission denied
+ls -l heads_and_tails.sh
+chmod u+x heads_and_tails.sh #Sirve para cambiar los permisos de un archivo
+./heads_and_tails.sh
+
+
+#############################################################
+# Ver las diapositivas donde hay cursos de más cosas de Linux
+#############################################################
+
+
