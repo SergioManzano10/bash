@@ -3,17 +3,17 @@
 ###############################
 
 #Lo primero es conectarse de forma segura para conectarnos a la conexión/entorno de nuestro master y ahí se creará la carpeta con nuestro usuario
-ssh smanzano@masteromics.uvic.cat #seleccionar yes
-omics1234 #la contraseña cuando escribes no se ve nada
+ssh xxx@xxx.uvic.cat #seleccionar yes
+xxx #la contraseña cuando escribes no se ve nada
 
 pwd
 ls
 # this is a comment, nothing is executed
 ls # this is a comment after ls 
 
-ssh smanzano@masteromics.uvic.cat #este es su usuario, yo tengo que poner el que he puesto antes
+ssh xxx@xxx.uvic.cat #este es su usuario, yo tengo que poner el que he puesto antes
 exit  # close connection to masteromics back to your local machine
-ssh smanzano@masteromics.uvic.cat
+ssh xxx@xxx.uvic.cat
 
 pwd #sirve para ver dónde nos encontramos
 ls #lista los archivos que hay dentro del lugar en el que estoy
@@ -189,7 +189,7 @@ uname -a #Which is the kernel that is running in masteromics.uvic.cat?
 ###############################
 
 # in masteromics
-ssh smanzano@masteromics.uvic.cat
+ssh xxx@xxx.uvic.cat
 mkdir bioinf_linux
 cd bioinf_linux
 echo AGTAGATA > seq_remote.txt
